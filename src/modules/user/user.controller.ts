@@ -6,6 +6,7 @@ import {
   Body,
   Patch,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
@@ -16,7 +17,7 @@ export class UserController {
   constructor(private readonly _userService: UserService) {}
 
   @Get(':id')
-  async getUser(@Param() id: number) {
+  async getUser(@Param('id', ParseIntPipe) id: number) {
     const user = await this._userService.get(id);
     return user;
   }
@@ -42,7 +43,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  async deteleuser(@Param() id: number) {
+  async deteleuser(@Param('id', ParseIntPipe) id: number) {
     const deleteUser = await this._userService.delete(id);
   }
 }
