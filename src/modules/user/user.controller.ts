@@ -23,13 +23,13 @@ export class UserController {
   }
 
   @Get()
-  async getUsers(): Promise<UserDto> {
+  async getUsers(): Promise<UserEntity[]> {
     const users = await this._userService.getAll();
     return users;
   }
 
   @Post('create')
-  async createuser(@Body() user: UserEntity): Promise<UserDto> {
+  async createuser(@Body() user: UserEntity): Promise<UserEntity> {
     const createUser = await this._userService.create(user);
     return createUser;
   }
