@@ -10,7 +10,7 @@ import { UserDto } from './dto/user.dto';
 import { UserEntity } from '../user/user.entity';
 import { UserDetails } from './user.details.entity';
 import { getConnection } from 'typeorm';
-import { Role } from '../role/role.entity';
+import { RoleEntity } from '../role/role.entity';
 
 @Injectable()
 export class UserService {
@@ -51,7 +51,7 @@ export class UserService {
     const details = new UserDetails();
     user.details = details;
 
-    const repo = await getConnection().getRepository(Role);
+    const repo = await getConnection().getRepository(RoleEntity);
     const defaultRole = await repo.findOne({ where: { name: 'GENERAL' } });
     user.roles = [defaultRole];
 

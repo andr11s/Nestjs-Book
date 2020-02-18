@@ -11,7 +11,7 @@ import {
 import { UserEntity } from '../user/user.entity';
 
 @Entity('roles')
-export class Role extends BaseEntity {
+export class RoleEntity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
   rolesid: number;
 
@@ -27,6 +27,9 @@ export class Role extends BaseEntity {
   )
   @JoinColumn()
   user: UserEntity[];
+
+  @Column({ type: 'varchar', default: 'ACTIVE', length: 8 })
+  status: string;
 
   @CreateDateColumn({ type: 'timestamp', name: 'ceated_name' })
   creatrAt: Date;

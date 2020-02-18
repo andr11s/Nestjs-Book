@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserDetails } from './user.details.entity';
-import { Role } from '../role/role.entity';
+import { RoleEntity } from '../role/role.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
@@ -36,12 +36,12 @@ export class UserEntity extends BaseEntity {
   details: UserDetails;
 
   @ManyToMany(
-    type => Role,
+    type => RoleEntity,
     role => role.user,
     { eager: true },
   )
   @JoinTable({ name: 'user_roles' })
-  roles: Role[];
+  roles: RoleEntity[];
 
   @Column({ type: 'varchar', default: 'ACTIVE', length: 8 })
   status: string;
