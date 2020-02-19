@@ -7,9 +7,10 @@ import { Configurations } from './config/config.keys';
 import { UserModule } from './modules/user/user.module';
 import { DatabaseModule } from './database/database.module';
 import { RoleModule } from './modules/role/role.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, UserModule, RoleModule],
+  imports: [ConfigModule, DatabaseModule, UserModule, RoleModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
