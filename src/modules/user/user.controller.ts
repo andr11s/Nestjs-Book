@@ -14,13 +14,14 @@ import { UserEntity } from '../user/user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../role/decorators/role.decorators';
 import { RoleGuard } from '../role/guards/role.guard';
+import { RoleType } from '../role/rolestypes.enum';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly _userService: UserService) {}
 
   @Get(':id')
-  @Roles('ADMINI')
+  @Roles(RoleType.ADMIN)
   @UseGuards(AuthGuard(), RoleGuard)
   async getUser(@Param('id', ParseIntPipe) id: number) {
     const user = await this._userService.get(id);
