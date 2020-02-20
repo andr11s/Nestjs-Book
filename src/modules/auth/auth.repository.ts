@@ -5,7 +5,7 @@ import { RoleRepository } from '../role/role.repository';
 import { RoleEntity } from '../role/role.entity';
 import { RoleType } from '../role/rolestypes.enum';
 import { UserDetails } from '../user/user.details.entity';
-import { genSalt, Hash } from 'bcryptjs';
+import { genSalt, hash } from 'bcryptjs';
 
 @EntityRepository(UserEntity)
 export class Authrepository extends Repository<UserEntity> {
@@ -30,7 +30,7 @@ export class Authrepository extends Repository<UserEntity> {
     users.details = details;
 
     const salt = await genSalt(10);
-    users.password = await Hash(passwoord, salt);
+    users.password = await hash(passwoord, salt);
     await users.save();
   }
 }

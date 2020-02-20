@@ -14,7 +14,9 @@ import { Configurations } from '../../config/config.keys';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Authrepository]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -22,14 +24,14 @@ import { Configurations } from '../../config/config.keys';
         return {
           secret: config.get(Configurations.JWT_SECRET),
           signOptions: {
-            expiresIn: 36000,
+            expiresIn: 3600,
           },
         };
       },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, ConfigService],
+  providers: [AuthService, ConfigService, JTstrategy],
   exports: [JTstrategy, PassportModule],
 })
 export class AuthModule {}

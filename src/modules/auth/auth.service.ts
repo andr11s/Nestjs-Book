@@ -30,7 +30,7 @@ export class AuthService {
       where: [{ username }, { email }],
     });
 
-    if (!UserExist) {
+    if (UserExist) {
       throw new ConflictException('username or email already exists');
     }
 

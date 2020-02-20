@@ -7,10 +7,11 @@ import {
   Patch,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserDto } from './dto/user.dto';
 import { UserEntity } from '../user/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {
@@ -22,6 +23,7 @@ export class UserController {
     return user;
   }
 
+  @UseGuards(AuthGuard())
   @Get()
   async getUsers(): Promise<UserEntity[]> {
     const users = await this._userService.getAll();
@@ -45,5 +47,13 @@ export class UserController {
   @Delete(':id')
   async deteleuser(@Param('id', ParseIntPipe) id: number) {
     const deleteUser = await this._userService.delete(id);
+  }
+
+  @Post('setrole/:userid/:roleid')
+  async setrole(
+    @Param('userid', ParseIntPipe) userid: number,
+    @Param('roleid', ParseIntPipe) roleid: number,
+  ) {
+    return this._userService.setRolUser(userid, roleid);
   }
 }

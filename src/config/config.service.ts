@@ -5,7 +5,7 @@ export class ConfigService {
   private readonly envConfig: { [key: string]: string };
 
   constructor() {
-    const isDevelopedEnv = process.env.NODE_ENV != 'production';
+    const isDevelopedEnv = process.env.NODE_ENV !== 'production';
 
     if (isDevelopedEnv) {
       const envFilePath = __dirname + '../../../.env';
