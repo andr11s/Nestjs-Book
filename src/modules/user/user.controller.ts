@@ -15,6 +15,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../role/decorators/role.decorators';
 import { RoleGuard } from '../role/guards/role.guard';
 import { RoleType } from '../role/rolestypes.enum';
+import { ReadUserDto } from './dto/read-user.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('users')
 export class UserController {
@@ -23,42 +25,36 @@ export class UserController {
   @Get(':id')
   @Roles(RoleType.ADMIN)
   @UseGuards(AuthGuard(), RoleGuard)
-  async getUser(@Param('id', ParseIntPipe) id: number) {
-    const user = await this._userService.get(id);
-    return user;
+  getUser(@Param('id', ParseIntPipe) userid: number): Promise<ReadUserDto> {
+    return this._userService.get(userid);
   }
 
   @UseGuards(AuthGuard())
   @Get()
-  async getUsers(): Promise<UserEntity[]> {
-    const users = await this._userService.getAll();
-    return users;
+  getUsers(): Promise<ReadUserDto[]> {
+    return this._userService.getAll();
   }
 
   @Post('create')
-  async createuser(@Body() user: UserEntity): Promise<UserEntity> {
-    const createUser = await this._userService.create(user);
-    return createUser;
+  async createuser(@Body() user: UserEntity): Promise<ReadUserDto> {
+    return this._userService.create(user);
   }
 
   @Patch()
-  async updateduser(
-    @Param() id: number,
-    @Body() user: UserEntity,
-  ): Promise<any> {
-    const updateUser = await this._userService.update(id, user);
+  async updateduser(@Param() id: number, @Body() user: UserDto): Promise<any> {
+    return this._userService.update(id, user);
   }
 
   @Delete(':id')
-  async deteleuser(@Param('id', ParseIntPipe) id: number) {
-    const deleteUser = await this._userService.delete(id);
+  deteleuser(@Param('id', ParseIntPipe) userid: number): Promise<void> {
+    return this._userService.delete(userid);
   }
 
   @Post('setrole/:userid/:roleid')
   async setrole(
     @Param('userid', ParseIntPipe) userid: number,
     @Param('roleid', ParseIntPipe) roleid: number,
-  ) {
+  ): Promise<Boolean> {
     return this._userService.setRolUser(userid, roleid);
   }
 }
