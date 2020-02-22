@@ -23,8 +23,7 @@ export class RoleController {
 
   @Get()
   getAll(): Promise<ReadRoleDto[]> {
-    const roles = this._RoleService.getAll();
-    return roles;
+    return this._RoleService.getAll();
   }
 
   @Post()

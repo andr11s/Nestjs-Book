@@ -8,6 +8,7 @@ import {
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { SigninDto } from './dto/signin.dto';
+import { LoggedInDto } from './dto/logged-in.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -15,13 +16,13 @@ export class AuthController {
 
   @Post('/signup')
   @UsePipes(ValidationPipe)
-  async Signup(@Body() signupdto: SignUpDto): Promise<void> {
+  Signup(@Body() signupdto: SignUpDto): Promise<void> {
     return this._AuthService.siginup(signupdto);
   }
 
-  @Post('/sigin')
+  @Post('/signin')
   @UsePipes(ValidationPipe)
-  async Sigin(@Body() sigindto: SigninDto) {
+  Signin(@Body() sigindto: SigninDto): Promise<LoggedInDto> {
     return this._AuthService.sigin(sigindto);
   }
 }

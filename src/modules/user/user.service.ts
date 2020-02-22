@@ -42,7 +42,7 @@ export class UserService {
       where: { status: status.ACTIVE },
     });
 
-    return users.map((user: UserEntity) => plainToClass(ReadUserDto, user));
+    return users.map((users: UserEntity) => plainToClass(ReadUserDto, users));
   }
 
   async create(user: UserEntity): Promise<ReadUserDto> {

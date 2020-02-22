@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import { UserDetails } from './user.details.entity';
 import { RoleEntity } from '../role/role.entity';
+import { BookEntity } from '../book/book.entity';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
@@ -42,6 +43,13 @@ export class UserEntity extends BaseEntity {
   )
   @JoinTable({ name: 'user_roles' })
   roles: RoleEntity[];
+
+  @ManyToMany(
+    type => BookEntity,
+    book => book.authors,
+  )
+  @JoinTable({ name: 'user_book' })
+  books: BookEntity[];
 
   @Column({ type: 'varchar', default: 'ACTIVE', length: 8 })
   status: string;

@@ -5,14 +5,15 @@ import { Exclude, Expose } from 'class-transformer';
 export class ReadRoleDto {
   @Expose()
   @IsNumber()
-  readonly Roleid: number;
+  readonly rolesid: number;
 
   @Expose()
   @IsString()
-  @MaxLength(50, { message: 'this Role name is not valid' })
-  readonly Rolename: string;
+  @MaxLength(25, { message: 'this Role name is not valid' })
+  readonly RoleName: string;
 
+  @Expose()
   @IsString()
-  @MaxLength(100, { message: 'This descriptions is not valid' })
-  readonly decriptions: string;
+  @MaxLength(50, { message: 'This descriptions is not valid' })
+  readonly descriptions: string;
 }
