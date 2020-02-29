@@ -113,7 +113,7 @@ export class BookService {
 
   async update(
     bookid: number,
-    role: Partial<UpdateBookDto>,
+    book: Partial<UpdateBookDto>,
     authorid: number,
   ): Promise<ReadBookDto> {
     const bookExist = await this._BookRepository.findOne(bookid, {
@@ -132,7 +132,7 @@ export class BookService {
       throw new UnauthorizedException('this user isnt  the books author');
     }
 
-    const updatebook = await this._BookRepository.update(bookid, role);
+    const updatebook = await this._BookRepository.update(bookid, book);
     return plainToClass(ReadBookDto, updatebook);
   }
 

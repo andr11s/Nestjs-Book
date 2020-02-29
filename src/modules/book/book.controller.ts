@@ -18,6 +18,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from '../role/guards/role.guard';
 import { GetUser } from '../auth/user.decorator';
 import { UpdateBookDto } from './dtos/update-book.dto';
+
 @Controller('book')
 export class BookController {
   constructor(private readonly _Bookservice: BookService) {}
@@ -39,37 +40,37 @@ export class BookController {
     return this._Bookservice.getAll();
   }
 
-  @Post()
+  @Post('create-book')
   @Roles(RoleType.AUTHOR)
   @UseGuards(AuthGuard(), RoleGuard)
   createBook(
-    @Body() role: Partial<CreateBookDto>,
+    @Body() book: Partial<CreateBookDto>,
     @GetUser('id') authorid: number,
   ): Promise<ReadBookDto> {
-    return this._Bookservice.create(role);
+    return this._Bookservice.create(book);
   }
 
   @Roles(RoleType.AUTHOR)
   @UseGuards(AuthGuard(), RoleGuard)
-  @Post()
+  @Post('create-book-author')
   createBookByAuthor(
-    @Body() role: Partial<CreateBookDto>,
+    @Body() book: Partial<CreateBookDto>,
     @GetUser('id') authorid: number,
   ): Promise<ReadBookDto> {
-    return this._Bookservice.createByAuthor(role, authorid);
+    return this._Bookservice.createByAuthor(book, authorid);
   }
 
-  @Patch('id')
+  @Patch(':id')
   updateBook(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() role: Partial<UpdateBookDto>,
+    @Param('id', ParseIntPipe) bookid: number,
+    @Body() book: Partial<UpdateBookDto>,
     @GetUser('id') authorid: number,
   ): Promise<ReadBookDto> {
-    return this._Bookservice.update(id, role, authorid);
+    return this._Bookservice.update(bookid, book, authorid);
   }
 
   @Delete(':id')
-  deletebook(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this._Bookservice.delete(id);
+  deletebook(@Param('id', ParseIntPipe) bookid: number): Promise<void> {
+    return this._Bookservice.delete(bookid);
   }
 }

@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import { Expose } from 'class-transformer';
 
 export class UpdateBookDto {
   @IsString()
